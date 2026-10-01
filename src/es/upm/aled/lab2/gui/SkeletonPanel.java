@@ -54,14 +54,29 @@ public class SkeletonPanel extends JPanel {
 		// Draw the tree of Nodes recursively
 		drawSkeleton(g, originX, originY, nodeRoot);
 	}
-
+	
+	/**
+	 * Paints in the panel all the nodes and segments in order to draw the skeleton
+	 * @param g Graphical context by which the drawings are made (lines, circles, etc.)
+	 * @param parentX The X coordinate of the parent node
+	 * @param parentY The Y coordinate of the parent node
+	 * @param node The new node to be added (its class contains the coordinates of this)
+	 */
 	private void drawSkeleton(Graphics g, double parentX, double parentY, Node node) {
-		// TODO: Ponga comentarios en este método
+		// Rellena los circulos de los nodos
 		g.fillOval((int) node.getX() - 4, (int) node.getY() - 4, 8, 8);
+		
+		//Dibuja la línea entre los nodos para dibujar los segmentos del esqueleto
 		g.drawLine((int) parentX, (int) parentY, (int) node.getX(), (int) node.getY());
+		
+		//Si ya no quedan nodos después de este (es decir, ya no hay más nodos "hijos") devuelve el 
+		//dibujo del esqueleto terminado. Si siguen quedandoo nodos que dibujar después, sigue con el método.
 		if (node.getChildren().size() == 0) {
 			return;
 		}
+		
+		//El método drawSkeleton llama al propio método drawSkeleton, por lo que solo devolverá el dibujo final
+		//del esqueleto cuando este haya dibujado todos los nodos hijos.
 		for (Node child : node.getChildren()) {
 			drawSkeleton(g, node.getX(), node.getY(), child);
 		}
