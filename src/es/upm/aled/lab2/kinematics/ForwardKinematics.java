@@ -35,17 +35,22 @@ public class ForwardKinematics {
 	private static Node computePositions(Segment link, double baseX, double baseY, double accumulatedAngle) {
 		//TODO: Código general
 		Node node = new Node(baseX, baseY);
+		double currentAngle = accumulatedAngle + link.getAngle();
+		double x = baseX+link.getLength()*Math.cos(currentAngle);
+		double y = baseY+link.getLength()*Math.sin(currentAngle);
+		node.addChild(new Node(x, y));
 		
 		//TODO: Caso base
 		if (link.getChildren().size() == 0) {
-			//Terminar
+			return node;
 		}
 		
 		//TODO: Paso recursivo
 		for (Segment line : link.getChildren()) {
-			node.addChild(new Node(baseX+line.getLength()*Math.cos(accumulatedAngle),baseY+line.getLength()*Math.sin(accumulatedAngle)));
-			baseX+=line.getLength()*Math.cos(accumulatedAngle);
-		} //Revisar
+			//Llamamos a la función para cada uno pasándoles (x, y) como nuevo origen y 'currentAngle' como base acumulada.
+			Node nodeChild = computePositions(line, x, y, currentAngle);
+			node.addChild(nodeChild);
+		} 
 		
 		return node;
 	}
