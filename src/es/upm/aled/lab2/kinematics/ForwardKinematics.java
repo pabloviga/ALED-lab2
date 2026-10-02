@@ -38,14 +38,14 @@ public class ForwardKinematics {
 		
 		//TODO: Caso base
 		if (link.getChildren().size() == 0) {
-			
+			//Terminar
 		}
 		
 		//TODO: Paso recursivo
 		for (Segment line : link.getChildren()) {
 			node.addChild(new Node(baseX+line.getLength()*Math.cos(accumulatedAngle),baseY+line.getLength()*Math.sin(accumulatedAngle)));
 			baseX+=line.getLength()*Math.cos(accumulatedAngle);
-		}
+		} //Revisar
 		
 		return node;
 	}
