@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Segment {
 	
-	//Atributos de la clase Segment
+	//Atributos de la clase "Segment"
 	
 	private double length;
 	private double angle;
